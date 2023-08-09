@@ -1,0 +1,9 @@
+^testdemo\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^data-raw$
+^LICENSE\.md$
+^\.devcontainer$

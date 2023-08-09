@@ -1,0 +1,22 @@
+Package: testdemo
+Title: Testing Code with {testthat} 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Bai", "Li", , "bai.li@noaa.gov", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8249-1442"))
+Description: Toy package with simple functions to demo how to test R code with {testthat}.
+License: GPL (>= 3) | file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+URL: https://bai-li-noaa.github.io/testdemo/
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    mockery
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true
