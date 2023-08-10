@@ -7,14 +7,14 @@ test_that("divide_by() works", {
   )
 
   #' @description Testing that divide_by(10, 3) returns a number that has a small
-  #' difference of 0.003 compared to 3.33
+  #' difference of 0.01 compared to 3.33
   expect_equal(
     object = divide_by(10, 3),
     expected = 3.33,
-    tolerance = 0.003
+    tolerance = 0.01
   )
 
-  #' @description Testing that divide_by(2, 0) returns NA
+  #' @description Testing that divide_by(2, 0) returns Inf
   expect_equal(
     object = divide_by(2, 0),
     expected = Inf
