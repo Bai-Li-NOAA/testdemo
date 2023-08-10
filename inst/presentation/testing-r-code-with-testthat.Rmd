@@ -7,7 +7,6 @@ output:
   xaringan::moon_reader:
     css: ["xaringan-themer.css"]
     lib_dir: libs
-    slide_level: 4
     nature:
       ratio: '4:3'
       highlightStyle: github
@@ -17,19 +16,8 @@ output:
 ---
 layout: true
 
-.footnote[U.S. Department of Commerce | National Oceanic and Atmospheric Administration | National Marine Fisheries Service]
-
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-```
-
-```{r xaringan-tile-view, echo=FALSE}
-# this gives you a tile navigation if you type "O" at any time
-xaringanExtra::use_tile_view()
-```
-
 ```{r xaringanthemer, include=FALSE, warning=FALSE}
-required_pkg <- c("DiagrammeR", "xaringanthemer", "remotes")
+required_pkg <- c("xaringanthemer", "remotes")
 pkg_to_install <- required_pkg[!(required_pkg %in%
                                    installed.packages()[, "Package"])]
 if (length(pkg_to_install)) install.packages(pkg_to_install)
@@ -89,6 +77,12 @@ style_xaringan(
       "color" = "blue")
   )
 )
+```
+
+.footnote[U.S. Department of Commerce | National Oceanic and Atmospheric Administration | National Marine Fisheries Service]
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
 ```
 
 ---
@@ -615,7 +609,7 @@ test_that("assamc data are unchanged", {
 - Document {testthat} tests 
 - Add a description to your tests using the roxygen tag `@description`.
 - Generate {bookdown} report of {testthat} results using `testdown::testdown()`
-- .hyperlink-style[[[{testdemo} report}(provide link here)]
+- .hyperlink-style[[[{testdemo} report}(https://bai-li-noaa.github.io/testdemo/tests/testdown/testdown-report-for-testdemo.html)]
 
 ```{r eval=FALSE}
 test_that("divide_by() works", {
@@ -744,3 +738,4 @@ The difference in growth dynamics between projects with good and bad tests. A pr
 - .hyperlink-style[[{shinytest}](https://rstudio.github.io/shinytest/)]
 - .hyperlink-style[[Use Catch for C++ Unit Testing](https://testthat.r-lib.org/reference/use_catch.html)]
 
+---
