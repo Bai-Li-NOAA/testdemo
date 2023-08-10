@@ -35,14 +35,14 @@ model_input <- ASSAMC::save_initial_input(
   case_name = "C0"
 )
 ASSAMC::run_om(input_list = model_input)
-assamc_data <- list(om_input=om_input,
+data_assamc <- list(om_input=om_input,
                     em_input=em_input,
                     om_output=om_output)
-save(assamc_data, file=file.path(maindir, "assamc_data.RData"))
-unlink(file.path(maindir, "case"), recursive = TRUE)
+save(assamc_data, file=file.path(maindir, "data_assamc.RData"))
+unlink(file.path(maindir, "C0"), recursive = TRUE)
 setwd(here::here())
 
 
 # Create package data -----------------------------------------------------
 
-usethis::use_data(assamc_data, overwrite = TRUE)
+usethis::use_data(data_assamc, overwrite = TRUE)

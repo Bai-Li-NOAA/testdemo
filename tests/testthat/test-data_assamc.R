@@ -1,36 +1,36 @@
-test_that("assamc data has correct structure", {
+test_that("data assamc has correct structure", {
 
-  #' @description Testing that the type of assamc_data is list.
+  #' @description Testing that the type of data_assamc is list.
   expect_equal(
-    object = typeof(assamc_data),
+    object = typeof(data_assamc),
     expected = "list"
   )
 
   expect_type(
-    object = assamc_data,
+    object = data_assamc,
     type = "list"
   )
 
-  #' @description Testing that the length of assamc_data is 3
+  #' @description Testing that the length of data_assamc is 3
   expect_equal(
-    object = length(assamc_data),
+    object = length(data_assamc),
     expected = 3
   )
 
   expect_length(
-    object = assamc_data,
+    object = data_assamc,
     n = 3
   )
 
-  #' @description Testing that the names of assamc_data include om_input,
+  #' @description Testing that the names of data_assamc include om_input,
   #' em_input, and om_output
   expect_equal(
-    object = names(assamc_data),
+    object = names(data_assamc),
     expected = c("om_input", "em_input", "om_output")
   )
 
   expect_named(
-    object = assamc_data,
+    object = data_assamc,
     expected = c("om_input", "om_output", "em_input"),
     ignore.order = TRUE
   )
@@ -41,5 +41,5 @@ test_that("assamc data are unchanged", {
   expect_snapshot(x = packageVersion("ASSAMC"))
 
   #' @description Testing that the structure of ASSAMC data is unchanged
-  expect_snapshot(x = str(assamc_data))
+  expect_snapshot(x = str(data_assamc))
 })
