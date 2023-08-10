@@ -50,6 +50,660 @@ Figure source: .hyperlink-style[[ENCOURAGEMENT, SILLINESS, &amp; EVERYTHING ELSE
 First peak: Write the first test
 Second peak: build FIMS testing frameworks
 
+---
+# Workflow and the many uses of tests*&lt;sup&gt;1&lt;/sup&gt;*
+.pull-left[
+&lt;img src="https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/img/tidy-tools-workflow-no-unit-testing.PNG" width="80%" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/img/tidy-tools-workflow-testing-1.PNG" width="80%" /&gt;
+]
+
+--
+
+- Verify that code work as expected
+
+- Shield existing behavior from new changes
+
+- Encourage clean code 
+
+- Serve as a playground for experimentation
+
+.footnote[
+[1]Riccomini and Ryaboy. 2021. The missing readme: a guide for the new software engineer. San Francisco, CA. William Pollock.&lt;br&gt;
+Figure source: .hyperlink-style[[Getting started with unit testing in R](https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/)]
+]
+
+---
+# Types of tests
+.pull-left[
+![Functional tests](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)
+]
+
+.pull-right[
+![Non-functional tests](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-of-Non-Functional-Testing.jpg)
+]
+
+.footnote[
+Figure source: .hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)]&lt;br&gt;
+.hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)]
+]
+---
+
+# Types of tests
+.pull-left[
+- Unit tests
+  - Verify a single method or behavior
+  - Fast, small, and focused
+  
+
+- Integration tests
+  - Verify that multiple components work together
+  - Slower to execute and run less frequently
+  - Require a more elaborate setup than unit tests
+]
+
+.pull-right[
+- System tests
+  - Verify a whole system with end-to-end workflows
+  - Simulate real user interactions in preproduction environments
+
+- Acceptance tests
+  - Validate that the delivered product meets acceptance criteria
+  - Performed by customers
+]
+
+---
+# Test tools
+
+- Test writing and execution tools
+
+  - .hyperlink-style[[{testthat}](https://testthat.r-lib.org/)] package
+  
+      - Write tests by modeling a test's lifecycle from setup to teardown
+      - Manage test execution (e.g., speed and isolation of tests)
+      - Provide various assertion methods
+      - Generate test result reports and help developers debug failed builds
+      - Integrate with code coverage tools
+
+---
+# Test tools
+
+- Test writing and execution tools
+
+  - .hyperlink-style[[{mockery}](https://github.com/r-lib/mockery/blob/main/tests/testthat/test_stub.R)] package
+  
+      - Mocking libraries to write clean and efficient tests
+      - Replace dependencies with stubs while also verifying how the dependencies were used
+      
+- Code quality tools
+
+  - Analyze code coverage (e.g., .hyperlink-style[[{covr}](https://covr.r-lib.org/)])
+  - Find bugs through static analysis (e.g., .hyperlink-style[[{lintr}](https://lintr.r-lib.org/)])
+  - Check for style errors (e.g., .hyperlink-style[[{styler}](https://styler.r-lib.org/)])
+
+---
+# Testing R code with {testthat}
+.pull-left[
+- R installed? 
+  - Recommended R: &gt;= 3.1
+  - I am on 4.1.3
+
+- Rstudio installed? 
+  - I am on 2022.12.0+353
+
+- Ready to build packages? 
+
+```r
+devtools::has_devel()
+```
+
+```
+## Your system is ready to build packages!
+```
+]
+
+--
+
+.pull-right[
+
+- {testthat} installed? 
+
+```r
+# Find the path to {testthat} package
+find.package("testthat")
+
+# Or find the version field from the 
+# DESCRIPTION file of the package
+packageVersion("testthat")
+
+# To install {testthat}
+# Install the released version from CRAN
+install.packages("testthat")
+
+# Or the development version from GitHub:
+# install.packages("pak")
+pak::pak("r-lib/testthat")
+```
+]
+---
+# Testing R code with {testthat}
+
+- Set up {testthat} framework for an R package
+
+```r
+usethis::use_testthat(3)
+
+v Setting active project to 'C:/Users/bai.li/Documents/GitHub/testdemo'
+v Adding 'testthat' to Suggests field in DESCRIPTION
+v Adding '3' to Config/testthat/editionv Creating 'tests/testthat/'
+v Writing 'tests/testthat.R'
+* Call `use_test()` to initialize a basic test file and open it for editing.
+```
+--
+
+.pull-left[
+DESCRIPTION
+
+```markdown
+Suggests: 
+    testthat (&gt;= 3.0.0)
+Config/testthat/edition: 3
+```
+]
+
+--
+
+.pull-right[
+tests/testthat.R
+
+```r
+# This file is part of the standard setup for testthat.
+# It is recommended that you do not modify it.
+#
+# Where should you do additional test configuration?
+# Learn more about the roles of various files in:
+# * https://r-pkgs.org/testing-design.html#sec-tests-files-overview
+# * https://testthat.r-lib.org/articles/special-files.html
+
+library(testthat)
+library(testdemo)
+
+test_check("testdemo")
+```
+]
+---
+# Testing R code with {testthat}
+
+
+---
+
+# Testing R code with {testthat}
+
+
+```r
+test_that("multiplication works", {
+  expect_equal(2 * 2, 4)
+  expect_equal(2 * 3, 6)
+})
+
+test_that("division works", {
+  expect_equal(4 / 2, 2)
+})
+```
+
+- Example test
+
+  - A test is one function call that starts with `test_that(" ", {})`
+    
+  - A test file can hold one or more `test_that()` tests
+    
+  - Each test has a name to describe what it is testing: e.g., "multiplication works" and "division works"
+    
+  - An expectation is a function call that starts with `expect_XXX`. See more examples from {testthat} .hyperlink-style[[function reference](https://testthat.r-lib.org/reference/index.html)]
+
+  - Each test can have one or more expectations
+
+---
+# Case 1: Testing an R function from an R package
+
+- The `divide_by()` function from .hyperlink-style[[R/math_function.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/R/math_function.R)]
+  - Division of two numbers
+      
+
+```r
+#' @title Division of two numbers
+#'
+#' @param dividend A number that is being divided in the division process.
+#' @param divisor A number that by which the dividend is being divided by.
+#' @return A number obtained in the division process.
+#' @examples
+#' divide_by(10, 2.5)
+#' divide_by(8, 3)
+#' @export
+divide_by &lt;- function(dividend, divisor){
+  result &lt;- dividend / divisor
+}
+```
+
+---
+# Case 1: Testing an R function from an R package
+
+- Create a paired test file .hyperlink-style[[tests/testthat/test-math_function.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/tests/testthat/test-math_function.R)]
+
+
+
+```r
+usethis::use_test(name = "math_function")
+```
+
+--
+
+
+```r
+test_that("divide_by() works", {
+
+  #' @description Testing that divide_by(10, 2.5) returns a number of 4
+  expect_equal(
+    object = divide_by(10, 2.5),
+    expected = 4
+  )
+
+  #' @description Testing that divide_by(2, 0) returns Inf
+  expect_equal(
+    object = divide_by(2, 0),
+    expected = Inf
+  )
+
+  #' @description Testing that divide_by(3) returns an error
+  expect_error(
+    object = divide_by(3)
+  )
+
+})
+```
+
+---
+# Case 1: Testing an R function from an R package
+
+- Workflow
+  
+  - Did I develop the function correctly?
+  
+      - Run `devtools::test(filter = "math_function")` to execute a single test
+
+  - Did I break other code in the codebase?
+  
+      - Run `devtools::test()` to execute all tests in a package
+
+  - Could my tests pass with devtools::test() but fail with `devtools::check()` because I made a faulty assumption about the testing environment?
+  
+      - Run `devtools::check()` to build and check the package using all known best practices
+
+---
+# Case 1: Testing an R function from an R package
+
+- What to test
+
+  - Correctness of both inputs and outputs
+      - Type input and output data
+      - Dimension of input and output data
+  - Built-in errors, warnings, or messages
+
+???
+Think more boundary conditions and corner cases.
+Write tests that fail when the behavior of code changes.
+---
+# Case 2: Testing a nested R function from an R package
+
+- The nested R function from .hyperlink-style[[R/nested_function.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/R/nested_function.R)]
+  
+  - nested_function calls `add()` and `divide_by()` functions
+
+
+```r
+#' @title Nested function
+#'
+#' @param a A number.
+#' @param b A number.
+#' @return A number obtained using both add and divide_by functions.
+#' @examples nested_function(10, 2)
+#' @export
+nested_function &lt;- function(a, b){
+  testdemo::add(a, b) + testdemo::divide_by(a, b)
+}
+```
+---
+# Case 2: Testing a nested R function from an R package
+
+- Integration test
+  - Check individual components
+  - Verify that `add()` and `divide_by()` functions work together as designed in the `nested_function()`
+
+
+```r
+test_that("nested_function() works", {
+  #' @description Testing that nested_function(3, 2) returns 6.5
+  # Manual calculation: (3+2)+(3/2) = 6.5
+  expect_equal(
+    object = nested_function(3, 2),
+    expected = 6.5
+  )
+
+  #' @description Testing that nested_function(4, 2) returns 8
+  # Call add() and divide_by() before setting up the test
+  add_result &lt;- add(4, 2)
+  divide_by_result &lt;- divide_by(4, 2)
+  expected_result &lt;- add_result + divide_by_result
+
+  expect_equal(nested_function(4, 2), expected_result)
+})
+```
+
+---
+# Case 2: Testing a nested R function from an R package
+
+- Unit test using {mockery}
+  - Stub out `add()` function with a value of 3
+  - Stub out `divide_by()` function with a value of 2
+
+
+```r
+test_that("nested_function() works with mock objects", {
+
+  #' @description Testing that nested_function() returns 5 using mock objects
+  # Set the output of testdemo::add() to 3
+  mockery::stub(testdemo::nested_function, "testdemo::add", 3)
+  # Set the output of testdemo::divide_by() to 2
+  mockery::stub(testdemo::nested_function, "testdemo::divide_by", 2)
+  object_result &lt;- testdemo::nested_function(3, 2)
+  expect_equal(
+    object = object_result,
+    3 + 2
+  )
+
+})
+```
+
+- `testthat::with_mock()` has similar functionality
+- `mockery::stub()` can stub out functions from base R packages while `testthat::with_mock` can not
+
+---
+# Case 3: Testing a data set from an R package
+- The data set from .hyperlink-style[[R/data_assamc.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/R/data_assamc.R)]
+  
+  - The data-creating script from .hyperlink-style[[data-raw/data_assamc.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/data-raw/data_assamc.R)]
+  - Create a simulated data set using the operating model from ASSAMC package (.hyperlink-style[[Li et al., 2021](https://doi.org/10.7755/FB.119.2-3.5)])
+
+
+```r
+#' @format A data list with 3 lists of data:
+#' \describe{
+#'   \item{om_input}{ASSAMC stock assessment input data list. It includes 45 lists of data.}
+#'   \item{om_output}{ASSAMC stock assessment output data list. It includes 14 lists of data:year, SSB, abundance, biomass.mt, N.age, L.age, L.knum, L.mt, msy, f, FAA, survey_age_comp, survey_index, and survey_q.}
+#'   \item{em_input}{ASSAMC stock assessment estimation model input data list. It includes 9 lists of data: L.obs, survey.obs, L.age.obs, survey.age.obs, n.L, n.survey, survey_q, cv.L, and cv.survey.}
+#' }
+```
+
+---
+# Case 3: Testing a data set from an R package
+
+- Check type, length and names of data_assamc list
+
+.pull-left[
+
+```r
+test_that("data assamc has correct structure", {
+
+  #' @description Testing that the type of data_assamc is list.
+  expect_equal(
+    object = typeof(data_assamc),
+    expected = "list"
+  )
+
+  #' @description Testing that the length of data_assamc is 3
+  expect_equal(
+    object = length(data_assamc),
+    expected = 3
+  )
+
+  #' @description Testing that the names of data_assamc include om_input,
+  #' em_input, and om_output
+  expect_equal(
+    object = names(data_assamc),
+    expected = c("om_input", "em_input", "om_output")
+  )
+
+})
+```
+]
+
+--
+
+.pull-right[
+
+```r
+test_that("data assamc has correct structure", {
+
+  #' @description Testing that the type of data_assamc is list.
+  expect_type(
+    object = data_assamc,
+    type = "list"
+  )
+
+  #' @description Testing that the length of data_assamc is 3
+  expect_length(
+    object = data_assamc,
+    n = 3
+  )
+
+  #' @description Testing that the names of data_assamc include om_input,
+  #' em_input, and om_output
+  expect_named(
+    object = data_assamc,
+    expected = c("om_input", "om_output", "em_input"),
+    ignore.order = TRUE
+  )
+})
+```
+]
+
+---
+# Case 3: Testing a data set from an R package
+
+- Check version of `ASSAMC` used and structure of data using snapshot tests
+- Record results in a separate human readable file
+- The first time `expect_snapshot()` is run, it will capture results in `tests/testthat/_snaps/{test}.md`
+
+.pull-left[
+
+```r
+test_that("assamc data are unchanged", {
+  #' @description Testing that the ASSAMC package version is unchanged
+  expect_snapshot(x = packageVersion("ASSAMC"))
+
+  #' @description Testing that the structure of ASSAMC data is unchanged
+  expect_snapshot(x = str(data_assamc))
+})
+```
+]
+
+.pull-right[
+```markdown
+# assamc data are unchanged
+    Code
+      packageVersion("ASSAMC")
+    Output
+      [1] '0.0.0.9000'
+---
+    Code
+      str(data_assamc)
+    Output
+      List of 3
+       $ om_input :List of 45
+        ..$ year                 : int [1:30] 1 2 3 4 5 6 7 8 9 10 ...
+        ..$ ages                 : int [1:12] 1 2 3 4 5 6 7 8 9 10 ...
+```
+]
+---
+# Case 3: Testing a data set from an R package
+
+- When an old test fails, a decision must be made: Did the developer intend to change behavior, or was a bug introduced?
+- Useful for checking various templates that generate images, data frames, and text files
+
+
+```r
+test_that("assamc data are unchanged", {
+  #' @description Testing that the ASSAMC package version is unchanged
+  expect_snapshot(x = packageVersion("ASSAMC"))
+
+  #' @description Testing that the structure of ASSAMC data is unchanged
+  expect_snapshot(x = str(data_assamc))
+})
+```
+
+---
+# .hyperlink-style[[{testdown}](https://github.com/ThinkR-open/testdown)] 
+- Document {testthat} tests 
+- Add a description to your tests using the roxygen tag `@description`.
+- Generate {bookdown} report of {testthat} results using `testdown::testdown()`
+- .hyperlink-style[[[{testdemo} report}(https://bai-li-noaa.github.io/testdemo/tests/testdown/testdown-report-for-testdemo.html)]
+
+
+```r
+test_that("divide_by() works", {
+
+  #' @description Testing that divide_by(10, 2.5) returns a number of 4
+  expect_equal(
+    object = divide_by(10, 2.5),
+    expected = 4
+  )
+  
+})
+```
+
+---
+# Test coverage
+
+- Track test coverage for a R package
+  - Check how much of code (%) is actually being tested 
+  - The report shows which lines of code are being tested and which are not
+  - Allow developers to asses their progress in quality checking their own code
+  - Allow users to verify the code quality
+- View reports locally
+
+
+```r
+# Installation
+install.packages("covr")
+library(covr)
+# Calculate the test coverage for the package
+cov &lt;- covr::package_coverage()
+
+# View results as a data.frame
+cov
+```
+
+
+```r
+testdemo Coverage: 100.00%
+R/math_function.R: 100.00%
+R/nested_function.R: 100.00%
+```
+
+---
+# Automated testing
+
+- Trigger automated steps (e.g., continuous integration) when we push and submit a pull request
+- Create a GitHub Actions workflow to run tests through `R CMD Check`
+  - Add platform compatibility tests to run the workflows on Linux, Mac, and Windows
+- Upload test coverage results to codecov
+- Render {testdown} documentation bookdown site
+
+
+```r
+# Installation
+install.packages("remotes")
+remotes::install_github("nmfs-fish-tools/ghactions4r")
+
+# Create a GitHub Actions workflow to run R CMD Check 
+ghactions4r::use_r_cmd_check()
+
+# Create a GitHub Actions workflow to upload test coverage results to codecov
+ghactions4r::use_calc_coverage()
+```
+
+---
+# Testing code for non-packages 
+
+- Use {testthat}*&lt;sup&gt;1&lt;/sup&gt;*
+  - Do not need `testthat.R` file under `tests/` folder
+  - Add a `setup.R` file and `source` scripts to be tested
+  - Run `testthat::test_dir(path/to/tests/folder)` in console to run tests
+  - See example here
+
+---
+# Testing code for non-packages
+
+- Use .hyperlink-style[[{tinytest}](https://github.com/markvanderloo/tinytest/tree/master)]
+  - lightweight package for unit testing
+
+
+```r
+# Installation
+install.packages("tinytest")
+
+# Write hello_tinytest() function
+hello_tinytest &lt;- function(name){
+  paste0("Hello ", name, ", starting your R analysis!")
+}
+
+# Test hello_tinytest() function using tinytest
+tinytest::expect_identical(
+  current = hello_tinytest("Bai"),
+  target = "Hello Bai, starting your R analysis!"
+)
+```
+
+.footnote[
+[1]Testing for non-packages. https://github.com/bradleyboehmke/unit-testing-r#testing-for-non-packages
+]
+---
+# Wrap-up
+
+.pull-left[
+- Write tests that include normal use, edge cases, expected error cases, and to reproduce bugs
+- Do not write tests just to boost code coverage
+- Use code quality tools to verify coverage, formatting, and complexity
+- Don't depend solely on code coverage as a measure of quality
+- Build a safety net and ensure good growth dynamics of a project
+]
+
+.pull-right[
+![Growth dynamics between projects with good and bad tests](https://drek4537l1klr.cloudfront.net/khorikov/Figures/01fig02_alt.jpg)
+.hyperlink-style[[(Khorikov, 2020)](https://livebook.manning.com/book/unit-testing/chapter-1/45)]
+]
+
+???
+Basic workflow: Write code, write tests, and then check if tests pass
+Test-driven development philosophy: write tests first and then update code to make tests pass
+  
+Build a safety net so changes do not break existing functionality. 
+The difference in growth dynamics between projects with good and bad tests. A project with badly written tests exhibits the properties of a project with good tests at the beginning, but it eventually falls into the stagnation phase.
+---
+# Resources
+
+- .hyperlink-style[[Testing chapter from R Packages (2e)](https://r-pkgs.org/testing-basics.html)]
+- .hyperlink-style[[Getting started with unit testing in R](https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/)]
+- .hyperlink-style[[r testthat and covr use in a non-package library](https://stackoverflow.com/questions/48637143/r-testthat-and-covr-use-in-a-non-package-library)]
+- .hyperlink-style[[TDD and unit testing in R using the 'testthat' package](https://pparacch.github.io/2017/05/18/test_driven_development_in_r.html)]
+- .hyperlink-style[[{shinytest}](https://rstudio.github.io/shinytest/)]
+- .hyperlink-style[[Use Catch for C++ Unit Testing](https://testthat.r-lib.org/reference/use_catch.html)]
+
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
