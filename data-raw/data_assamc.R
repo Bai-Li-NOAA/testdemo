@@ -38,7 +38,7 @@ ASSAMC::run_om(input_list = model_input)
 data_assamc <- list(om_input=om_input,
                     em_input=em_input,
                     om_output=om_output)
-save(assamc_data, file=file.path(maindir, "data_assamc.RData"))
+save(data_assamc, file=file.path(maindir, "data_assamc.RData"))
 unlink(file.path(maindir, "C0"), recursive = TRUE)
 setwd(here::here())
 
