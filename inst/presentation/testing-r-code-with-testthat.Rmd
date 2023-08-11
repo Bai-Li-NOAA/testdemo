@@ -105,6 +105,22 @@ First peak: Write the first test
 Second peak: build FIMS testing frameworks
 
 ---
+# Outline
+
+-  Workflow and the many uses of tests
+-  Types of tests
+-  Test tools
+-  Testing R code with {testthat}
+  -  Case 1: Testing an R function from an R package
+  -  Case 2: Testing a nested R function from an R package
+  -  Case 3: Testing a data set from an R package
+-  {testdown} report
+-  Test coverage
+-  Automated testing
+-  Testing code for non-packages 
+-  Wrap-up
+-  Level up
+---
 # Workflow and the many uses of tests*<sup>1</sup>*
 .pull-left[
 ```{r, echo=FALSE, out.width="80%"}
