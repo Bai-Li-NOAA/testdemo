@@ -42,7 +42,7 @@ test_that("assamc data are unchanged", {
   required_pkg <- c("pak")
   pkg_to_install <- required_pkg[!(required_pkg %in% pkg_all)]
   if (length(pkg_to_install)>0) install.packages(pkg_to_install)
-  library(here)
+  library(pak)
 
   if (!"ASSAMC" %in% pkg_all) {
     pak::pak(
