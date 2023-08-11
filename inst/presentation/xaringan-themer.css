@@ -75,7 +75,7 @@ h1, h2, h3 {
 .remark-slide-content {
   background-color: var(--background-color);
   font-size: 1.5rem;
-  background-image: url(C:/Users/bai.li/Documents/GitHub/testdemo/inst/presentation/noaa_template/slideswoosh.PNG);
+  background-image: url(static/noaa_template/slideswoosh.PNG);
   background-size: cover;
   padding: 16px 64px 16px 64px;
   width: 100%;
@@ -137,7 +137,7 @@ a, a > code {
 }
 .title-slide {
   background-color: var(--title-slide-background-color);
-  background-image: url("C:/Users/bai.li/Documents/GitHub/testdemo/inst/presentation/noaa_template/slideswooshver.png");
+  background-image: url("static/noaa_template/slideswooshver.png");
   background-size: cover;
 }
 .title-slide .remark-slide-number {

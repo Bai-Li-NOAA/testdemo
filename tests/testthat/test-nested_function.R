@@ -26,7 +26,7 @@ test_that("nested_function() works with mock objects", {
   object_result <- testdemo::nested_function(3, 2)
   expect_equal(
     object = object_result,
-    3 + 2
+    expected = 5 # 3+2
   )
 
 })

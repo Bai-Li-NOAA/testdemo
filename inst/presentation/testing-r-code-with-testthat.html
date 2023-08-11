@@ -40,7 +40,8 @@ layout: true
 - I would like to share with you that has worked well for me. 
 - However, I am still learning!
 - Comments and suggestions are welcome!
-![](https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/d65eb83f-66e4-4760-8c1f-29d336d1d6df_rw_1920.png?h=fffbca083a9e47c066abf46451710e59)
+
+&lt;img src="https://cdn.myportfolio.com/45214904-6a61-4e23-98d6-b140f8654a40/d65eb83f-66e4-4760-8c1f-29d336d1d6df_rw_1920.png?h=fffbca083a9e47c066abf46451710e59" width="80%" /&gt;
 
 .footnote[
 Figure source: .hyperlink-style[[ENCOURAGEMENT, SILLINESS, &amp; EVERYTHING ELSE](https://allisonhorst.com/everything-else)]
@@ -88,7 +89,8 @@ Figure source: .hyperlink-style[[Getting started with unit testing in R](https:/
 ]
 
 .footnote[
-Figure source: .hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)]&lt;br&gt;
+Figure source: &lt;br&gt;
+.hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)]&lt;br&gt;
 .hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.tatvasoft.com/outsourcing/wp-content/uploads/2022/06/Types-Of-Functional-Testing.jpg)]
 ]
 ---
@@ -99,7 +101,6 @@ Figure source: .hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.ta
   - Verify a single method or behavior
   - Fast, small, and focused
   
-
 - Integration tests
   - Verify that multiple components work together
   - Slower to execute and run less frequently
@@ -138,6 +139,8 @@ Figure source: .hyperlink-style[[Types-Of-Functional-Testing.jpg](https://www.ta
   
       - Mocking libraries to write clean and efficient tests
       - Replace dependencies with stubs while also verifying how the dependencies were used
+
+--
       
 - Code quality tools
 
@@ -349,8 +352,9 @@ test_that("divide_by() works", {
 - What to test
 
   - Correctness of both inputs and outputs
-      - Type input and output data
-      - Dimension of input and output data
+      - Types of input and output data
+      - Dimensions of input and output data
+  - Edge cases (e.g., invalid values)
   - Built-in errors, warnings, or messages
 
 ???
@@ -422,7 +426,7 @@ test_that("nested_function() works with mock objects", {
   object_result &lt;- testdemo::nested_function(3, 2)
   expect_equal(
     object = object_result,
-    3 + 2
+    expected = 3 + 2
   )
 
 })
@@ -451,6 +455,7 @@ test_that("nested_function() works with mock objects", {
 ---
 # Case 3: Testing a data set from an R package
 
+- The test from .hyperlink-style[[tests/testthat/test-data_assamc.R](https://github.com/Bai-Li-NOAA/testdemo/blob/main/tests/testthat/test-data_assamc.R)]
 - Check type, length and names of data_assamc list
 
 .pull-left[
@@ -552,7 +557,7 @@ test_that("assamc data are unchanged", {
 # Case 3: Testing a data set from an R package
 
 - When an old test fails, a decision must be made: Did the developer intend to change behavior, or was a bug introduced?
-- Useful for checking various templates that generate images, data frames, and text files
+- Snapshot tests are useful for checking various templates that generate images, data frames, and text files
 
 
 ```r
@@ -566,11 +571,11 @@ test_that("assamc data are unchanged", {
 ```
 
 ---
-# .hyperlink-style[[{testdown}](https://github.com/ThinkR-open/testdown)] 
+# .hyperlink-style[[{testdown}](https://github.com/ThinkR-open/testdown)] report
 - Document {testthat} tests 
 - Add a description to your tests using the roxygen tag `@description`.
 - Generate {bookdown} report of {testthat} results using `testdown::testdown()`
-- .hyperlink-style[[[{testdemo} report}(https://bai-li-noaa.github.io/testdemo/tests/testdown/testdown-report-for-testdemo.html)]
+- .hyperlink-style[[{testdemo} report](https://bai-li-noaa.github.io/testdemo/tests/testdown/testdown-report-for-testdemo.html)]
 
 
 ```r
@@ -591,7 +596,7 @@ test_that("divide_by() works", {
 - Track test coverage for a R package
   - Check how much of code (%) is actually being tested 
   - The report shows which lines of code are being tested and which are not
-  - Allow developers to asses their progress in quality checking their own code
+  - Allow developers to assess their progress in quality checking their own code
   - Allow users to verify the code quality
 - View reports locally
 
@@ -621,7 +626,6 @@ R/nested_function.R: 100.00%
 - Create a GitHub Actions workflow to run tests through `R CMD Check`
   - Add platform compatibility tests to run the workflows on Linux, Mac, and Windows
 - Upload test coverage results to codecov
-- Render {testdown} documentation bookdown site
 
 
 ```r
@@ -643,8 +647,38 @@ ghactions4r::use_calc_coverage()
   - Do not need `testthat.R` file under `tests/` folder
   - Add a `setup.R` file and `source` scripts to be tested
   - Run `testthat::test_dir(path/to/tests/folder)` in console to run tests
-  - See example here
+  - See .hyperlink-style[[R script example](https://github.com/Bai-Li-NOAA/testdemo/blob/main/inst/rscripts/hello_testthat_example.R)] and .hyperlink-style[[test example](https://github.com/Bai-Li-NOAA/testdemo/tree/main/inst/rtests)]
 
+.pull-left[
+inst/test_nonpkg/rscripts/
+hello_testthat_example.R
+
+```r
+hello_testthat_example &lt;- function(name){
+  paste0("Hello ", name, ", starting your R analysis!")
+}
+```
+]
+
+.pull-right[
+inst/test_nonpkg/rtests/setup.R
+
+```r
+library(testthat)
+
+r_script &lt;- here::here("inst", "test_nonpkg", "rscripts", "hello_testthat_example.R")
+source(r_script)
+
+# Run testthat::test_dir(here::here("inst", "test_nonpkg", "rtests"))
+# in console to test hello_testthat_example()
+```
+]
+
+
+
+.footnote[
+[1].hyperlink-style[[Testing for non-packages](https://github.com/bradleyboehmke/unit-testing-r#testing-for-non-packages)]. 
+]
 ---
 # Testing code for non-packages
 
@@ -668,16 +702,14 @@ tinytest::expect_identical(
 )
 ```
 
-.footnote[
-[1]Testing for non-packages. https://github.com/bradleyboehmke/unit-testing-r#testing-for-non-packages
-]
+
 ---
 # Wrap-up
 
 .pull-left[
 - Write tests that include normal use, edge cases, expected error cases, and to reproduce bugs
-- Do not write tests just to boost code coverage
 - Use code quality tools to verify coverage, formatting, and complexity
+- Do not write tests just to boost code coverage
 - Don't depend solely on code coverage as a measure of quality
 - Build a safety net and ensure good growth dynamics of a project
 ]
@@ -694,7 +726,7 @@ Test-driven development philosophy: write tests first and then update code to ma
 Build a safety net so changes do not break existing functionality. 
 The difference in growth dynamics between projects with good and bad tests. A project with badly written tests exhibits the properties of a project with good tests at the beginning, but it eventually falls into the stagnation phase.
 ---
-# Resources
+# Level up
 
 - .hyperlink-style[[Testing chapter from R Packages (2e)](https://r-pkgs.org/testing-basics.html)]
 - .hyperlink-style[[Getting started with unit testing in R](https://www.pipinghotdata.com/posts/2021-11-23-getting-started-with-unit-testing-in-r/)]
