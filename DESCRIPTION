@@ -16,7 +16,6 @@ Suggests:
     testthat (>= 3.0.0),
     mockery,
     covr
-Remotes: Bai-Li-NOAA/Age_Structured_Stock_Assessment_Model_Comparison
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Depends: 
