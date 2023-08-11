@@ -37,20 +37,6 @@ test_that("data assamc has correct structure", {
 })
 
 test_that("assamc data are unchanged", {
-  # Install pak and ASSAMC package
-  pkg_all <- installed.packages()[, "Package"]
-  required_pkg <- c("pak")
-  pkg_to_install <- required_pkg[!(required_pkg %in% pkg_all)]
-  if (length(pkg_to_install)>0) install.packages(pkg_to_install)
-  library(pak)
-
-  if (!"ASSAMC" %in% pkg_all) {
-    pak::pak(
-      "Bai-Li-NOAA/Age_Structured_Stock_Assessment_Model_Comparison"
-    )
-  }
-  library("ASSAMC")
-
   #' @description Testing that the ASSAMC package version is unchanged
   expect_snapshot(x = packageVersion("ASSAMC"))
 

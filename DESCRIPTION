@@ -10,15 +10,18 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 URL: https://bai-li-noaa.github.io/testdemo/
+Imports:
+    mockery,
+    ASSAMC (>= 0.0.0.9000)
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    mockery,
     covr
+Remotes: 
+    Bai-Li-NOAA/Age_Structured_Stock_Assessment_Model_Comparison
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Depends: 
     R (>= 2.10)
 LazyData: true
-
