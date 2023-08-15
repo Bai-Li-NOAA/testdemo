@@ -185,8 +185,6 @@ devtools::has_devel()
 ```
 ]
 
---
-
 .pull-right[
 
 - {testthat} installed? 
@@ -207,6 +205,8 @@ install.packages("testthat")
 # install.packages("pak")
 pak::pak("r-lib/testthat")
 ```
+
+- Examples can be found in .hyperlink[[{testdemo}](https://github.com/Bai-Li-NOAA/testdemo)]
 ]
 ---
 # Testing R code with {testthat}
@@ -218,7 +218,8 @@ usethis::use_testthat(3)
 
 v Setting active project to 'C:/Users/bai.li/Documents/GitHub/testdemo'
 v Adding 'testthat' to Suggests field in DESCRIPTION
-v Adding '3' to Config/testthat/editionv Creating 'tests/testthat/'
+v Adding '3' to Config/testthat/edition
+v Creating 'tests/testthat/'
 v Writing 'tests/testthat.R'
 * Call `use_test()` to initialize a basic test file and open it for editing.
 ```
@@ -266,24 +267,22 @@ test_check("testdemo")
 ```r
 test_that("multiplication works", {
   expect_equal(2 * 2, 4)
-  expect_equal(2 * 3, 6)
 })
+# Test passed 
 
-test_that("division works", {
-  expect_equal(4 / 2, 2)
+test_that("demonstrate a failed test", {
+  expect_error(2 * 2)
 })
+# -- Failure (Line 2): demonstrate a failed test ---------------------------------
+# `2 * 2` did not throw the expected error.
 ```
 
 - Example test
 
   - A test is one function call that starts with `test_that(" ", {})`
-    
   - A test file can hold one or more `test_that()` tests
-    
-  - Each test has a name to describe what it is testing: e.g., "multiplication works" and "division works"
-    
+  - Each test has a name to describe what it is testing: e.g., "multiplication works"
   - An expectation is a function call that starts with `expect_XXX`. See more examples from {testthat} .hyperlink-style[[function reference](https://testthat.r-lib.org/reference/index.html)]
-
   - Each test can have one or more expectations
 
 ---
@@ -364,6 +363,22 @@ test_that("divide_by() works", {
 
 ---
 # Case 1: Testing an R function from an R package
+- devtools::test() output
+
+```r
+&gt; devtools::test()
+i Testing testdemo
+v | F W S  OK | Context
+v |         8 | data_assamc [0.2s]                                                                                                       
+v |         7 | math_function                                                                                                            
+v |         3 | nested_function                                                                                                          
+
+== Results ==============================================================================================================================
+Duration: 0.4 s
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 18 ]
+
+```
 
 - What to test
 
@@ -407,7 +422,7 @@ nested_function &lt;- function(a, b){
 ```r
 test_that("nested_function() works", {
   #' @description Testing that nested_function(3, 2) returns 6.5
-  # Manual calculation: (3+2)+(3/2) = 6.5
+  # Calculation: (3+2)+(3/2) = 6.5
   expect_equal(
     object = nested_function(3, 2),
     expected = 6.5
@@ -609,7 +624,7 @@ test_that("divide_by() works", {
 ---
 # Test coverage
 
-- Track test coverage for a R package
+- Track test coverage for an R package
   - Check how much of code (%) is actually being tested 
   - The report shows which lines of code are being tested and which are not
   - Allow developers to assess their progress in quality checking their own code
