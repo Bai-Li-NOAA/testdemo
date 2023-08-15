@@ -18,9 +18,9 @@
 #' str(data_assamc)
 #' head(data_assamc)
 #' plot(
-#'  data_assamc$om_input$year,
-#'  data_assamc$om_output$biomass.mt,
-#'  xlab = "Year", ylab = "Biomass (mt)"
+#'   data_assamc$om_input$year,
+#'   data_assamc$om_output$biomass.mt,
+#'   xlab = "Year", ylab = "Biomass (mt)"
 #' )
 #'
 "data_assamc"

@@ -1,5 +1,4 @@
 test_that("divide_by() works", {
-
   #' @description Testing that divide_by(10, 2.5) returns a number of 4
   expect_equal(
     object = divide_by(10, 2.5),
@@ -30,11 +29,9 @@ test_that("divide_by() works", {
   expect_error(
     object = divide_by(3)
   )
-
 })
 
 test_that("add() works", {
-
   #' @description Testing that add(10, 2.5) returns a number of 12.5
   expect_equal(
     object = add(10, 2.5),
@@ -46,5 +43,4 @@ test_that("add() works", {
     object = add(10, 0),
     expected = 10
   )
-
 })

@@ -1,5 +1,4 @@
 test_that("data assamc has correct structure", {
-
   #' @description Testing that the type of data_assamc is list.
   expect_equal(
     object = typeof(data_assamc),

@@ -7,7 +7,7 @@
 #' divide_by(10, 2.5)
 #' divide_by(8, 3)
 #' @export
-divide_by <- function(dividend, divisor){
+divide_by <- function(dividend, divisor) {
   result <- dividend / divisor
 }
 
@@ -21,6 +21,6 @@ divide_by <- function(dividend, divisor){
 #' add(10, 2.5)
 #' add(8, 3)
 #' @export
-add <- function(x, y){
+add <- function(x, y) {
   result <- x + y
 }

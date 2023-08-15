@@ -17,7 +17,6 @@ test_that("nested_function() works", {
 
 
 test_that("nested_function() works with mock objects", {
-
   #' @description Testing that nested_function() returns 5 using mock objects
   # Set the output of testdemo::add() to 3
   mockery::stub(testdemo::nested_function, "testdemo::add", 3)
@@ -28,5 +27,4 @@ test_that("nested_function() works with mock objects", {
     object = object_result,
     expected = 5 # 3+2
   )
-
 })
