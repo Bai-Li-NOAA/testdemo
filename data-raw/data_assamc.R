@@ -9,7 +9,7 @@
 pkg_all <- installed.packages()[, "Package"]
 required_pkg <- c("here")
 pkg_to_install <- required_pkg[!(required_pkg %in% pkg_all)]
-if (length(pkg_to_install)>0) install.packages(pkg_to_install)
+if (length(pkg_to_install) > 0) install.packages(pkg_to_install)
 library(here)
 
 if (!"ASSAMC" %in% pkg_all) {
@@ -35,10 +35,12 @@ model_input <- ASSAMC::save_initial_input(
   case_name = "C0"
 )
 ASSAMC::run_om(input_list = model_input)
-data_assamc <- list(om_input=om_input,
-                    em_input=em_input,
-                    om_output=om_output)
-save(data_assamc, file=file.path(maindir, "data_assamc.RData"))
+data_assamc <- list(
+  om_input = om_input,
+  em_input = em_input,
+  om_output = om_output
+)
+save(data_assamc, file = file.path(maindir, "data_assamc.RData"))
 unlink(file.path(maindir, "C0"), recursive = TRUE)
 setwd(here::here())
 
